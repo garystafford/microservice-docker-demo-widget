@@ -5,7 +5,8 @@ import org.springframework.data.annotation.Id;
 import java.math.BigDecimal;
 
 public class Widget {
-    @Id private String id;
+    @Id
+    private String id;
 
     private String product_id;
     private String name;
@@ -62,15 +63,16 @@ public class Widget {
         this.inventory = inventory;
     }
 
-//    public Widget() {
-//    }
-//
-//    public Widget(String product_id, String name, String color, String size, BigDecimal price, Integer inventory) {
-//        this.product_id = product_id;
-//        this.name = name;
-//        this.color = color;
-//        this.size = size;
-//        this.price = price;
-//        this.inventory = inventory;
-//    }
+    public Widget() {
+    }
+
+    public Widget(String product_id, String name, String color,
+                  String size, BigDecimal price, Integer inventory) {
+        this.product_id = product_id;
+        this.name = name;
+        this.color = color;
+        this.size = size;
+        this.price = price;
+        this.inventory = inventory;
+    }
 }
