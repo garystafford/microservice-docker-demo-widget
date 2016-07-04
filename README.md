@@ -1,6 +1,6 @@
 # microservice-docker-demo-widget
 #### Introduction
-One of a set of Java Spring Boot microservices, for an upcoming post on scaling Spring Boot microservices with Docker.
+One of a set of Java Spring Boot microservices, for an upcoming post on scaling Spring Boot microservices with the latest Docker features.
 
 #### Technologies
 * Java
@@ -25,7 +25,8 @@ mongoimport --db widget-development --collection widget --type json --jsonArray 
 
 ```bash
 # build and start service
-./gradlew build && java -jar build/libs/widget-0.0.1-SNAPSHOT.jar
+./gradlew clean build && \
+java -jar build/libs/widget-0.0.1-SNAPSHOT.jar
 ```
 
 ```bash
