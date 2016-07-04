@@ -1,9 +1,9 @@
 package com.example;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigDecimal;
-
+@Document
 public class Widget {
     @Id
     private String id;
@@ -12,8 +12,23 @@ public class Widget {
     private String name;
     private String color;
     private String size;
-    private BigDecimal price;
+    private Integer price;
     private Integer inventory;
+    private String preview;
+
+    public Widget() {
+    }
+
+    public Widget(String product_id, String name, String color, String size,
+                  Integer price, Integer inventory, String preview) {
+        this.product_id = product_id;
+        this.name = name;
+        this.color = color;
+        this.size = size;
+        this.price = price;
+        this.inventory = inventory;
+        this.preview = preview;
+    }
 
     public String getProduct_id() {
         return product_id;
@@ -47,11 +62,11 @@ public class Widget {
         this.size = size;
     }
 
-    public BigDecimal getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -63,16 +78,11 @@ public class Widget {
         this.inventory = inventory;
     }
 
-    public Widget() {
+    public String getPreview() {
+        return preview;
     }
 
-    public Widget(String product_id, String name, String color,
-                  String size, BigDecimal price, Integer inventory) {
-        this.product_id = product_id;
-        this.name = name;
-        this.color = color;
-        this.size = size;
-        this.price = price;
-        this.inventory = inventory;
+    public void setPreview(String preview) {
+        this.preview = preview;
     }
 }
