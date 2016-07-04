@@ -41,16 +41,6 @@ curl -i -X POST -H "Content-Type:application/json" -d '{
   "preview": "https://s3.amazonaws.com/widgets-microservice-demo/N212QZOD9B.png"
 }' http://localhost:8030/widgets
 
-curl -i -X PUT -H "Content-Type:application/json" -d '{
-  "product_id": "N212QZOD9B",
-  "name": "Pentwist",
-  "color": "Gray",
-  "size": "Huge",
-  "price": 75,
-  "inventory": 5,
-  "preview": "https://s3.amazonaws.com/widgets-microservice-demo/N212QZOD9B.png"
-}' http://localhost:8030/widgets/577a7c43d4c6a73786bb6dc6
-
 curl -i -X POST -H "Content-Type:application/json" -d '{
   "product_id": "N43WV5234S",
   "name": "Zapster",
