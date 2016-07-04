@@ -1,9 +1,35 @@
 # microservice-docker-demo-widget
+#### Introduction
+One of a set of Java Spring Boot microservices, for an upcoming post on scaling Spring Boot microservices with Docker.
+
+#### Technologies
+* Java
+* Spring Boot
+* Gradle
+* MongoDB
+
+#### Commands
+```bash
+# drop existing database
+mongo
+> use user-development
+> db.widget.find()
+> db.dropDatabase()
+```
 
 ```bash
-./gradlew build
-java -jar build/libs/widget-0.0.1-SNAPSHOT.jar
+# import sample data
+mongoimport --db widget-development --collection widget --type json --jsonArray \
+    --file /Users/gstaffo/IdeaProjects/widget-docker-demo/widget/src/main/resources/data/widget_data.json
+```
 
+```bash
+# build and start service
+./gradlew build && java -jar build/libs/widget-0.0.1-SNAPSHOT.jar
+```
+
+```bash
+# test service
 curl -i -X POST -H "Content-Type:application/json" -d '{
   "product_id": "N212QZOD9B",
   "name": "Pentwist",
