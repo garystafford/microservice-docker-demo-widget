@@ -22,7 +22,7 @@ mongo
 ```bash
 # import sample data
 mongoimport --db widgets --collection widget --type json --jsonArray \
-    --file /Users/gstaffo/IdeaProjects/widget-docker-demo/widget/src/main/resources/data/widget_data.json
+    --file /Users/gstaffo/Documents/projects/widget-docker-demo/widget-service/src/main/resources/data/widget_data.json
 ```
 
 ```bash
