@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/widget.iml" filepath="$PROJECT_DIR$/widget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/widget-service.iml" filepath="$PROJECT_DIR$/widget-service.iml" />
     </modules>
   </component>
 </project>
