@@ -21,7 +21,7 @@ apply plugin: 'docker'
 
 jar {
     baseName = 'widget-service'
-    version = '0.0.1-SNAPSHOT'
+    version =  '0.1.0'
 }
 
 sourceCompatibility = 1.8
@@ -53,6 +53,10 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-mongodb')
     compile('org.springframework.boot:spring-boot-starter-data-rest')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
 }
 
 dependencyManagement {
