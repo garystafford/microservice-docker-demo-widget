@@ -9,6 +9,7 @@ One of a set of Java Spring Boot microservices, for an upcoming post on scaling 
 * MongoDB
 * Spring Cloud Config Server
 * Spring Cloud Netflix Eureka
+* Spring Boot with Docker
 
 #### Commands
 ```bash
@@ -33,6 +34,18 @@ mongoimport --db widgets --collection widget --type json --jsonArray \
 
 # production
 ./gradlew clean build && \
+  java -jar -Dspring.profiles.active=production \
+    build/libs/widgets-service-0.0.1-SNAPSHOT.jar
+```
+
+```bash
+# build Docker Image (development)
+./gradlew clean build buildDocker --info && \
+  java -jar -Dspring.profiles.active=development \
+    build/libs/widgets-service-0.0.1-SNAPSHOT.jar
+
+# build Docker Image (production)
+./gradlew clean build buildDocker --info && \
   java -jar -Dspring.profiles.active=production \
     build/libs/widgets-service-0.0.1-SNAPSHOT.jar
 ```
