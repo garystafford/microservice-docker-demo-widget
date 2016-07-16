@@ -7,7 +7,8 @@ One of a set of Java Spring Boot microservices, for an upcoming post on scaling 
 * Spring Boot
 * Gradle
 * MongoDB
-* Spring Cloud Config Server
+* Consul
+* Spring Cloud Config Server (migrating to Consul)
 * Spring Cloud Netflix Eureka
 * Spring Boot with Docker
 
