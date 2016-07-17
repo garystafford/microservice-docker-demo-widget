@@ -1,6 +1,6 @@
 # microservice-docker-demo-widget
 #### Introduction
-One of a set of Java Spring Boot microservices, for an upcoming post on scaling Spring Boot microservices with the latest Spring and Docker features.
+One of a set of Java Spring Boot services, for an upcoming post on scaling Spring Boot microservices with the latest Spring and Docker features.
 
 #### Technologies
 * Java
@@ -12,7 +12,7 @@ One of a set of Java Spring Boot microservices, for an upcoming post on scaling 
 * Spring Cloud Netflix Eureka
 * Spring Boot with Docker
 
-#### Commands
+#### MongoDB
 Common MongoDB Commands
 ```bash
 mongo # use mongo shell
@@ -29,6 +29,7 @@ mongoimport --db widgets --collection widget --type json --jsonArray \
     --file ${PROJECT_ROOT}/widget-service/src/main/resources/data/data.json
 ```
 
+#### Build Service
 Build and start service
 ```bash
 # development environment profile
@@ -42,14 +43,9 @@ Build and start service
     build/libs/widget-service-0.1.0.jar
 ```
 
-Build Docker Image of service (do not include profile)
+#### Test Service
+Create new widget document
 ```bash
-./gradlew clean build buildDocker --info
-```
-
-Test the service
-```bash
-# create new widget document
 curl -i -X POST -H "Content-Type:application/json" -d '{
   "product_id": "N212QZOD9B",
   "name": "Pentwist",
@@ -60,7 +56,7 @@ curl -i -X POST -H "Content-Type:application/json" -d '{
   "preview": "https://s3.amazonaws.com/widgets-microservice-demo/N212QZOD9B.png"
 }' http://localhost:8030/widgets
 
-# create new widget document
+# create another new widget document
 curl -i -X POST -H "Content-Type:application/json" -d '{
   "product_id": "N43WV5234S",
   "name": "Zapster",
@@ -70,8 +66,29 @@ curl -i -X POST -H "Content-Type:application/json" -d '{
   "inventory": 4,
   "preview": "https://s3.amazonaws.com/widgets-microservice-demo/N43WV5234S.png"
 }' http://localhost:8030/widgets
+```
 
-# get all widgets
+Get widgets
+```bash
 curl -i -X GET http://localhost:8030/widgets | prettyjson
 ```
-_* uses prettyjson Ruby gem_
+
+#### Docker
+Login to Docker Hub first
+```bash
+docker login
+```
+
+Build the Docker Image containing service jar. The profile will be used to run
+ Docker container not create Docker Image
+```bash
+./gradlew clean build buildDocker
+```
+
+Create and run a Docker container
+```bash
+docker run -e "SPRING_PROFILES_ACTIVE=production" -p 8030:8030 -t garystafford/widget-service
+```
+
+#### References
+* https://github.com/Transmode/gradle-docker

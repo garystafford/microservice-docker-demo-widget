@@ -14,14 +14,13 @@ buildscript {
 group = 'garystafford' //dockerhub org
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'docker'
 
 jar {
     baseName = 'widget-service'
-    version =  '0.1.0'
+    version = '0.1.0'
 }
 
 sourceCompatibility = 1.8
@@ -60,9 +59,9 @@ task wrapper(type: Wrapper) {
 }
 
 dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Brixton.SR2"
-    }
+  imports {
+    mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Brixton.SR3'
+  }
 }
 
 eclipse {
