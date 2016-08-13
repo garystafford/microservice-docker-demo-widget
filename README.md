@@ -36,12 +36,12 @@ Build and start service
 # development environment profile
 ./gradlew clean build && \
   java -jar -Dspring.profiles.active=development \
-    build/libs/widget-service-0.1.0.jar
+  build/libs/widget-service-0.1.0.jar
 
 # production environment profile
 ./gradlew clean build && \
   java -jar -Dspring.profiles.active=production \
-    build/libs/widget-service-0.1.0.jar
+  build/libs/widget-service-0.1.0.jar
 ```
 
 #### Test Service
