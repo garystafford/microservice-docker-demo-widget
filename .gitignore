@@ -94,3 +94,5 @@ gradle-app.setting
 # JIRA plugin
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
+
+*.log
