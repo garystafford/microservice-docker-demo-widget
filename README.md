@@ -23,24 +23,19 @@ mongo # use mongo shell
 > db.dropDatabase()
 ```
 
-Import sample data to MongoDB
+Import sample data to MongoDB locally
 ```bash
 PROJECT_ROOT='/Users/gstaffo/Documents/projects/widget-docker-demo'
-mongoimport --db widgets --collection widget --type json --jsonArray \
-    --file ${PROJECT_ROOT}/widget-service/src/main/resources/data/data.json
+mongoimport --host localhost:27017 --db widgets --collection widget \
+  --type json --jsonArray \
+  --file ${PROJECT_ROOT}/widget-service/src/main/resources/data/data.json
 ```
 
 #### Build Service
-Build and start service
+Build and start service locally
 ```bash
-# development environment profile
 ./gradlew clean build && \
-  java -jar -Dspring.profiles.active=development \
-  build/libs/widget-service-0.1.0.jar
-
-# production environment profile
-./gradlew clean build && \
-  java -jar -Dspring.profiles.active=production \
+  java -jar -Dspring.profiles.active=local \
   build/libs/widget-service-0.1.0.jar
 ```
 
@@ -89,6 +84,15 @@ Build the Docker Image containing service jar. The profile will be used to run
 Create and run a Docker container
 ```bash
 docker run -e "SPRING_PROFILES_ACTIVE=production" -p 8030:8030 -t garystafford/widget-service
+```
+
+Import sample data to MongoDB running in container
+_Doesn't work right now even with sudo - error inserting documents: not authorized_
+```bash
+PROJECT_ROOT='/Users/gstaffo/Documents/projects/widget-docker-demo'
+mongoimport --host localhost:27018 --db widgets --collection widget \
+  --type json --jsonArray \
+  --file ${PROJECT_ROOT}/widget-service/src/main/resources/data/data.json
 ```
 
 #### References
