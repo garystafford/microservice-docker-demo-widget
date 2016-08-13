@@ -38,6 +38,9 @@ task buildDocker(type: Docker, dependsOn: build) {
   doFirst {
     copy {
       from jar
+      from 'src/main/docker/filebeat.yml'
+      from 'src/main/docker/logstash-beats.crt'
+      from 'src/main/docker/start.sh'
       into stageDir
     }
   }

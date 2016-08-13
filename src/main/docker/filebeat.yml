@@ -17,14 +17,9 @@ filebeat:
       document_type: syslog
     -
       paths:
-        - /var/log/spring-music.log
-      document_type: log4j
+        - widget-service.log
+      document_type: spring
       multiline:
         pattern: '^[[:space:]]+|^Caused by:'
         negate: false
         match: after
-    -
-      paths:
-        - /usr/local/tomcat/logs/*.out
-        - /usr/local/tomcat/logs/*.log
-      document_type: tomcat
