@@ -5,7 +5,7 @@
 set -e # exit with nonzero exit code if anything fails
 
 # go to the distributions directory and create a *new* Git repo
-cd build/distributions
+cd build/libs
 git init
 
 # inside this git repo we'll pretend to be a new user
@@ -14,6 +14,7 @@ git config user.email "auto-deploy@travis-ci.com"
 
 # The first and only commit to this new Git repo contains all the
 # files present with the commit message.
+rm *.jar.original
 git add .
 git commit -m "Deploy Travis CI build #${TRAVIS_BUILD_NUMBER} artifacts to GitHub"
 
