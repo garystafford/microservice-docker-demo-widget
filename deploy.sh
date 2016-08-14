@@ -14,7 +14,7 @@ git config user.email "auto-deploy@travis-ci.com"
 
 # The first and only commit to this new Git repo contains all the
 # files present with the commit message.
-rm *.jar.original
+# rm *.jar.original
 git add .
 git commit -m "Deploy Travis CI build #${TRAVIS_BUILD_NUMBER} artifacts to GitHub"
 
@@ -27,4 +27,4 @@ git commit -m "Deploy Travis CI build #${TRAVIS_BUILD_NUMBER} artifacts to GitHu
 # export GH_TOKEN=721fd28bc24dedf553c9ecb6e6c2f137fffb8b5f
 # travis encrypt GH_TOKEN=721fd28bc24dedf553c9ecb6e6c2f137fffb8b5f --add
 # export GH_REF=github.com/garystafford/microservice-docker-demo-artifacts.git
-git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master > /dev/null 2>&1
+git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master > /dev/null 2>&1
