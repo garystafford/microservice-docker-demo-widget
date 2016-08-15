@@ -1,4 +1,4 @@
-# Builds the Widget Service
+# Builds the Widget Service Docker Image on Docker Hub
 
 FROM frolvlad/alpine-oraclejdk8:slim
 

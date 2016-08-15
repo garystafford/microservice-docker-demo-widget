@@ -1,4 +1,4 @@
-# Builds the Widget Service
+# Builds the Widget Service using Spring Boot with Docker
 
 FROM frolvlad/alpine-oraclejdk8:slim
 
