@@ -9,9 +9,11 @@ ENV REFRESHED_AT 2016-08-13
 ENV GITHUB_REPO https://github.com/garystafford/microservice-docker-demo-artifacts
 ENV APP_FILE widget-service-0.1.0.jar
 
-RUN set -ex && apk --no-cache add --virtual .build-dependencies curl \
-  && curl -fsSL ${GITHUB_REPO}/${APP_FILE} -o /app.jar \
-  && sh -c 'touch /app.jar'
+RUN set -ex \
+  && apk --no-cache add --virtual .build-dependencies \
+    curl
+RUN curl -fsSL ${GITHUB_REPO}/${APP_FILE} -o /app.jar
+RUN sh -c 'touch /app.jar'
 
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
