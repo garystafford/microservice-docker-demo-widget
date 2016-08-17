@@ -14,8 +14,6 @@ RUN set -ex \
   && curl -fsSL ${GITHUB_REPO}/${APP_FILE} -o /app.jar \
   && sh -c 'touch /app.jar'
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
-
 #########################################################################################
 # below from:
 #   https://github.com/spujadas/elk-docker/blob/master/nginx-filebeat/Dockerfile
