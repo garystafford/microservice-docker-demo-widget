@@ -33,16 +33,17 @@ RUN set -ex \
   && cd filebeat-* \
   && cp filebeat /bin \
   \
-  && rm -rf /tmp/filebeat* \
-  && apk del .build-dependencies
+  && rm -rf /tmp/filebeat*
+  # \
+  # && apk del .build-dependencies
 
 ### configure Filebeat
 # config file
 ADD filebeat.yml /etc/filebeat/filebeat.yml
 
 # CA cert
-RUN mkdir -p /etc/pki/tls/certs
-ADD logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
+# RUN mkdir -p /etc/pki/tls/certs
+# ADD logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
 
 ### start Filebeat
 ADD start.sh /usr/local/bin/start.sh

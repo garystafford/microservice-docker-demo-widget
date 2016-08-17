@@ -6,8 +6,8 @@ MAINTAINER Gary A. Stafford <garystafford@rochester.rr.com>
 ENV REFRESHED_AT 2016-08-13
 
 # install jar from GitHub
-ENV GITHUB_REPO https://github.com/garystafford/microservice-docker-demo-widget/raw/build-artifacts
-ENV APP_FILE widget-service-0.1.0.jar
+ENV GITHUB_REPO=https://github.com/garystafford/microservice-docker-demo-widget/raw/build-artifacts \
+    APP_FILE=widget-service-0.1.0.jar
 
 RUN set -ex \
   && apk --no-cache add --virtual .build-dependencies curl \
@@ -35,16 +35,17 @@ RUN curl -fsSL http://download.elastic.co/beats/filebeat/filebeat-${FILEBEAT_VER
   && cd filebeat-* \
   && cp filebeat /bin \
   \
-  && rm -rf /tmp/filebeat* \
-  && apk del .build-dependencies
+  && rm -rf /tmp/filebeat*
+  # \
+  # && apk del .build-dependencies
 
 ### configure Filebeat
 # config file
 ADD filebeat.yml /etc/filebeat/filebeat.yml
 
 # CA cert
-RUN mkdir -p /etc/pki/tls/certs
-ADD logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
+# RUN mkdir -p /etc/pki/tls/certs
+# ADD logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
 
 ### start Filebeat
 ADD start.sh /usr/local/bin/start.sh
