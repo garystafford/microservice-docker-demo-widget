@@ -78,7 +78,7 @@ docker login
 Build the Docker Image containing service jar. The profile will be used to run
  Docker container not create Docker Image
 ```bash
-./gradlew clean build buildDocker
+./gradlew clean build buildDocker --info
 ```
 
 Create and run a Docker container
