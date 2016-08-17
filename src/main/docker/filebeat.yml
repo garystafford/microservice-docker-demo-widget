@@ -17,7 +17,7 @@ filebeat:
       document_type: syslog
     -
       paths:
-        - widget-service.log
+        - /widget-service.log
       document_type: spring
       multiline:
         pattern: '^[[:space:]]+|^Caused by:'
