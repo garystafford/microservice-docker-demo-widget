@@ -83,6 +83,12 @@ Build the Docker Image containing service jar. The profile will be used to run
 ./gradlew clean build buildDocker --info
 ```
 
+If you chose to set `push = false` within the `buildDocker` method,
+then use the following command to push the image to DockerHub
+```bash
+docker push garystafford/widget-service:latest
+```
+
 Create and run a Docker container
 ```bash
 docker run -e "SPRING_PROFILES_ACTIVE=production" -p 8030:8030 -t garystafford/widget-service
