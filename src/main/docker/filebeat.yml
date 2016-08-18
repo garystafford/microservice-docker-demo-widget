@@ -20,6 +20,6 @@ filebeat:
         - /widget-service.log
       document_type: spring
       multiline:
-        pattern: '^[[:space:]]+|^Caused by:'
+        pattern: '^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}[.]\d{3}'
         negate: false
         match: after
