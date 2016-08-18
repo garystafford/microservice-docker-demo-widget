@@ -41,8 +41,8 @@ RUN set -ex \
 ADD filebeat.yml /etc/filebeat/filebeat.yml
 
 # CA cert
-# RUN mkdir -p /etc/pki/tls/certs
-# ADD logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
+RUN mkdir -p /etc/pki/tls/certs
+ADD logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
 
 ### start Filebeat
 ADD start.sh /usr/local/bin/start.sh
