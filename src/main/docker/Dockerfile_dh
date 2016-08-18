@@ -12,7 +12,8 @@ ENV GITHUB_REPO=https://github.com/garystafford/microservice-docker-demo-widget/
 RUN set -ex \
   && apk --no-cache add --virtual .build-dependencies curl \
   && curl -fsSL ${GITHUB_REPO}/${APP_FILE} -o /app.jar \
-  && sh -c 'touch /app.jar'
+  && sh -c 'touch /app.jar' \
+  && touch /widget-service.log
 
 #########################################################################################
 # below from:

@@ -7,7 +7,8 @@ ENV REFRESHED_AT 2016-08-13
 
 VOLUME /tmp
 ADD widget-service-0.1.0.jar /app.jar
-RUN sh -c 'touch /app.jar'
+RUN sh -c 'touch /app.jar' \
+  && touch /widget-service.log
 
 #########################################################################################
 # below from:
