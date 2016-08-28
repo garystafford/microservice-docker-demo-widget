@@ -3,7 +3,7 @@
 FROM frolvlad/alpine-oraclejdk8:slim
 
 MAINTAINER Gary A. Stafford <garystafford@rochester.rr.com>
-ENV REFRESHED_AT 2016-08-28
+ENV REFRESHED_AT 2016-08-28 16:45:13
 
 VOLUME /tmp
 ADD widget-service-0.1.0.jar /app.jar
@@ -41,6 +41,9 @@ RUN set -ex \
 # config file
 ADD filebeat.yml /etc/filebeat/filebeat.yml
 ADD filebeat.template.json /etc/filebeat/filebeat.template.json
+
+# hack because elk was resolving to wrong IP of 198.105.244.228?
+RUN echo $(getent hosts elk) >> /etc/hosts
 
 # CA cert
 RUN mkdir -p /etc/pki/tls/certs

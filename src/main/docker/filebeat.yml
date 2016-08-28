@@ -10,16 +10,11 @@ output:
 
 filebeat:
   prospectors:
-    # -
-    #   paths:
-    #     - /var/log/syslog
-    #     - /var/log/auth.log
-    #   document_type: syslog
     -
       paths:
         - /widget-service.log
       document_type: spring
       multiline:
         pattern: '^[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}'
-        negate: false
+        negate: true
         match: after
