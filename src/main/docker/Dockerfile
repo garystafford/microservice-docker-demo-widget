@@ -40,6 +40,7 @@ RUN set -ex \
 ### configure Filebeat
 # config file
 ADD filebeat.yml /etc/filebeat/filebeat.yml
+ADD filebeat.template.json /etc/filebeat/filebeat.template.json
 
 # CA cert
 RUN mkdir -p /etc/pki/tls/certs
