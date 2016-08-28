@@ -3,7 +3,7 @@
 FROM frolvlad/alpine-oraclejdk8:slim
 
 MAINTAINER Gary A. Stafford <garystafford@rochester.rr.com>
-ENV REFRESHED_AT 2016-08-13
+ENV REFRESHED_AT 2016-08-28
 
 VOLUME /tmp
 ADD widget-service-0.1.0.jar /app.jar
