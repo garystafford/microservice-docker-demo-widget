@@ -4,9 +4,9 @@ output:
     hosts:
       - elk:5044
     timeout: 15
-    # tls:
-    #   certificate_authorities:
-    #   - /etc/pki/tls/certs/logstash-beats.crt
+    tls:
+      certificate_authorities:
+      - /etc/pki/tls/certs/logstash-beats.crt
 
 filebeat:
   prospectors:
