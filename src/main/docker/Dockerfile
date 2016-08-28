@@ -42,9 +42,6 @@ RUN set -ex \
 ADD filebeat.yml /etc/filebeat/filebeat.yml
 ADD filebeat.template.json /etc/filebeat/filebeat.template.json
 
-# hack because elk was resolving to wrong IP of 198.105.244.228?
-RUN echo $(getent hosts elk) >> /etc/hosts
-
 # CA cert
 RUN mkdir -p /etc/pki/tls/certs
 ADD logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
