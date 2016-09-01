@@ -7,34 +7,36 @@
 # Spring Boot Widget Microservice
 
 #### Introduction
-One of a set of Java Spring Boot services, for an upcoming post on scaling Spring Boot microservices with the latest Spring and Docker features.
+One of a set of Java Spring Boot services, for an upcoming post on scaling microservices with the latest Spring and Docker features. A Docker Image, containing the service, is be build locally and pushed to DockerHub, using Spring Boot with Docker. Alternately, the post will demonstrate building the Docker Image, using a continuous integration pipeline with GitHub, Travis CI and DockerHub automated build feature.
+
+Widgets are inanimate objects that users purchase with points. Widgets have particular physical characteristics, such as product id, name, color, size, and current price. An inventory of widgets is stored in the `widgets` MongoDB database.
 
 #### Technologies
 * Java
 * Spring Boot
 * Gradle
 * MongoDB
-* Consul
 * Spring Cloud Config Server (migrating to Consul)
 * Spring Cloud Netflix Eureka
 * Spring Boot with Docker
 
 #### MongoDB
-Common MongoDB Commands
+Import sample data to MongoDB locally
+```bash
+# set your project root
+PROJECT_ROOT='/Users/gstaffo/Documents/projects/widget-docker-demo'
+mongoimport --host localhost:27017 --db widgets --collection widget \
+  --type json --jsonArray \
+  --file ${PROJECT_ROOT}/widget-service/src/main/resources/data/data.json
+```
+
+Common MongoDB commands
 ```bash
 mongo # use mongo shell
 > show dbs
 > use widgets
 > db.widget.find()
 > db.dropDatabase()
-```
-
-Import sample data to MongoDB locally
-```bash
-PROJECT_ROOT='/Users/gstaffo/Documents/projects/widget-docker-demo'
-mongoimport --host localhost:27017 --db widgets --collection widget \
-  --type json --jsonArray \
-  --file ${PROJECT_ROOT}/widget-service/src/main/resources/data/data.json
 ```
 
 #### Build Service
@@ -46,7 +48,7 @@ Build and start service locally
 ```
 
 #### Test Service
-Create new widget document
+Create a new widget
 ```bash
 curl -i -X POST -H "Content-Type:application/json" -d '{
   "product_id": "N212QZOD9B",
@@ -57,8 +59,9 @@ curl -i -X POST -H "Content-Type:application/json" -d '{
   "inventory": 5,
   "preview": "https://s3.amazonaws.com/widgets-microservice-demo/N212QZOD9B.png"
 }' http://localhost:8030/widgets
-
-# create another new widget document
+```
+Create another new widget
+```bash
 curl -i -X POST -H "Content-Type:application/json" -d '{
   "product_id": "N43WV5234S",
   "name": "Zapster",
@@ -70,27 +73,33 @@ curl -i -X POST -H "Content-Type:application/json" -d '{
 }' http://localhost:8030/widgets
 ```
 
-Get widgets
+Get all widgets
 ```bash
 curl -i -X GET http://localhost:8030/widgets | prettyjson
 ```
 
-#### Docker
-Login to Docker Hub first
+#### Building Images with Spring Boot
+Change the `group` key in `build.gradle` to you DockerHub repository name, such as
+```text
+group = '<your_dockerhub_repo_name>'
+```
+
+Login to your Docker Hub account from command line
 ```bash
 docker login
 ```
 
-Build the Docker Image containing service jar. The profile will be used to run
- Docker container not create Docker Image
+Build the Docker Image containing service jar
 ```bash
-./gradlew clean build buildDocker --info
+./gradlew clean build buildDocker
 ```
+If `push = true` was set in the `buildDocker` method of the `build.gradle`, the images
+is automatically pushed to your DockerHub account.
 
-If you chose to set `push = false` within the `buildDocker` method,
-then use the following command to push the image to DockerHub
+If you chose to set `push = false` within the `buildDocker` method of the `build.gradle`,
+then use the following type of command to push the new Docker Image to DockerHub, after it is built.
 ```bash
-docker push garystafford/widget-service:latest
+docker push <your_dockerhub_repo_name>/widget-service:latest
 ```
 
 Create and run a Docker container
@@ -100,6 +109,7 @@ docker run -e "SPRING_PROFILES_ACTIVE=production" -p 8030:8030 -t garystafford/w
 
 Import sample data to MongoDB running in container
 ```bash
+# set your project root
 PROJECT_ROOT='/Users/gstaffo/Documents/projects/widget-docker-demo'
 mongoimport --host localhost:27018 --db widgets --collection widget \
   --type json --jsonArray \

@@ -11,7 +11,7 @@ buildscript {
     }
 }
 
-group = 'garystafford' //dockerhub org
+group = 'garystafford' // your dockerhub repo goes here!
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
