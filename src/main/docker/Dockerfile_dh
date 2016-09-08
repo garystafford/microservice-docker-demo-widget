@@ -6,8 +6,8 @@ MAINTAINER Gary A. Stafford <garystafford@rochester.rr.com>
 ENV REFRESHED_AT 2016-08-28 16:45:13
 
 # install jar from GitHub
-ENV GITHUB_REPO=https://github.com/garystafford/microservice-docker-demo-widget/raw/build-artifacts \
-    APP_FILE=widget-service-0.1.0.jar
+ENV GITHUB_REPO=https://github.com/garystafford/microservice-docker-demo-widget/raw/build-artifacts
+ENV APP_FILE=widget-service-0.1.0.jar
 
 RUN set -ex \
   && apk --no-cache add --virtual .build-dependencies curl \
