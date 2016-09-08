@@ -44,7 +44,7 @@ mongo # use mongo shell
 ```
 
 #### Build Service Locally
-To build, test, and run service locally, both the Spring Cloud Config Server and Netflix Eureka projects must be started first.
+To build, test, and run the Widget service locally, both the [Spring Cloud Config Server](https://github.com/garystafford/microservice-docker-demo-config-server) and [Netflix Eureka](https://github.com/garystafford/microservice-docker-demo-eureka-server) projects must be started first.
 ```bash
 ./gradlew clean build && \
   java -jar -Dspring.profiles.active=local \
