@@ -30,6 +30,10 @@ public class Widget {
         this.preview = preview;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getProduct_id() {
         return product_id;
     }

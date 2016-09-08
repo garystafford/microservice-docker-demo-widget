@@ -28,6 +28,7 @@ Import sample data to MongoDB locally
 ```bash
 # set your project root
 PROJECT_ROOT='/Users/gstaffo/Documents/projects/widget-docker-demo'
+
 mongoimport --host localhost:27017 --db widgets --collection widget \
   --type json --jsonArray \
   --file ${PROJECT_ROOT}/widget-service/src/main/resources/data/data.json
@@ -42,15 +43,15 @@ mongo # use mongo shell
 > db.dropDatabase()
 ```
 
-#### Build Service
-Build and start service locally
+#### Build Service Locally
+To build, test, and run service locally, both the Spring Cloud Config Server and Netflix Eureka projects must be started first.
 ```bash
 ./gradlew clean build && \
   java -jar -Dspring.profiles.active=local \
   build/libs/widget-service-0.1.0.jar
 ```
 
-#### Test Service
+#### Test Service Locally
 Create a new widget
 ```bash
 curl -i -X POST -H "Content-Type:application/json" -d '{
@@ -114,6 +115,7 @@ Import sample data to MongoDB running in container
 ```bash
 # set your project root
 PROJECT_ROOT='/Users/gstaffo/Documents/projects/widget-docker-demo'
+
 mongoimport --host localhost:27018 --db widgets --collection widget \
   --type json --jsonArray \
   --file ${PROJECT_ROOT}/widget-service/src/main/resources/data/data.json
