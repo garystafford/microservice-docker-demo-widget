@@ -11,7 +11,7 @@
 set -e # exit with nonzero exit code if anything fails
 
 # go to the distributions directory and create a *new* Git repo
-cd build/distributions
+cd build/libs
 git init
 
 # inside this git repo we'll pretend to be a new user
