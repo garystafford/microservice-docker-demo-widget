@@ -45,7 +45,7 @@ mongo # use mongo shell
 ```
 
 #### Build Service Locally
-To build, test, and run the Widget service locally, both the [Spring Cloud Config Server](https://github.com/garystafford/microservice-docker-demo-config-server) and [Netflix Eureka](https://github.com/garystafford/microservice-docker-demo-eureka-server) projects must be started first.
+Note to build, test, and run the Widget service locally, outside of a Docker container, both the [Spring Cloud Config Server](https://github.com/garystafford/microservice-docker-demo-config-server) and [Netflix Eureka](https://github.com/garystafford/microservice-docker-demo-eureka-server) projects must be started first.
 ```bash
 ./gradlew clean build && \
   java -jar -Dspring.profiles.active=local \
@@ -83,7 +83,7 @@ Get all widgets
 curl -i -X GET http://localhost:8030/widgets | prettyjson
 ```
 
-#### Building Images with Spring Boot
+#### Building Docker Images with Spring Boot with Docker
 Change the `group` key in `build.gradle` to you DockerHub repository name, such as
 ```text
 group = '<your_dockerhub_repo_name>'
@@ -94,7 +94,7 @@ Login to your Docker Hub account from command line
 docker login
 ```
 
-Build the Docker Image containing service jar
+Build the Docker Image containing the Spring Boot service JAR
 ```bash
 ./gradlew clean build buildDocker
 ```
@@ -112,7 +112,7 @@ Create and run a Docker container
 docker run -e "SPRING_PROFILES_ACTIVE=production" -p 8030:8030 -t garystafford/widget-service
 ```
 
-Import sample data to MongoDB running in container
+Import sample data to MongoDB running in the Docker container
 ```bash
 # set your project root
 PROJECT_ROOT='/Users/gstaffo/Documents/projects/widget-docker-demo'
