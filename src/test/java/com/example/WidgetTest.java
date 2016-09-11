@@ -1,6 +1,5 @@
 package com.example;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,14 +24,9 @@ public class WidgetTest {
         setWidget = new Widget();
     }
 
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
     @Test
     public void testGetId() throws Exception {
-        Assert.assertEquals(null, getWidget.getId());
+        Assert.assertNull(getWidget.getId());
     }
 
     @Test
