@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.3.6.RELEASE'
+        springBootVersion = '1.4.0.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -32,13 +32,14 @@ repositories {
 }
 
 task buildDocker(type: Docker, dependsOn: build) {
-  push = false
+  push = true
   applicationName = jar.baseName
   dockerfile = file('src/main/docker/Dockerfile')
   doFirst {
     copy {
       from jar
       from 'src/main/docker/filebeat.yml'
+      from 'src/main/docker/filebeat.template.json'
       from 'src/main/docker/logstash-beats.crt'
       from 'src/main/docker/start.sh'
       into stageDir
@@ -59,18 +60,18 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '3.1-rc-1'
 }
 
 dependencyManagement {
   imports {
-    mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Brixton.SR3'
+    mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Brixton.SR5'
   }
 }
 
 test {
     testLogging {
-        events "passed", "skipped", "failed"
+        events 'passed', 'skipped', 'failed'
     }
 }
 

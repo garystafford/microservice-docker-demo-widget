@@ -27,7 +27,7 @@ RUN set -ex \
 
 # configure filebeat
 COPY filebeat.yml /etc/filebeat/filebeat.yml
-#COPY filebeat.template.json /etc/filebeat/filebeat.template.json
+COPY filebeat.template.json /etc/filebeat/filebeat.template.json
 COPY logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
 
 # start filebeat
