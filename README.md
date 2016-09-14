@@ -124,3 +124,4 @@ mongoimport --host localhost:27018 --db widgets --collection widget \
 
 #### References
 * [https://github.com/Transmode/gradle-docker](https://github.com/Transmode/gradle-docker)
+* [https://github.com/bmuschko/gradle-docker-plugin](https://github.com/bmuschko/gradle-docker-plugin)

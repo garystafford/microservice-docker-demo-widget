@@ -11,12 +11,13 @@ RUN sh -c 'touch /app.jar' \
   && touch /widget-service.log
 
 # install filebeat
-ENV FILEBEAT_SRC_SHA1=3fde7f5f5ea837140965a193bbb387c131c16d9c
-ENV FILEBEAT_VERSION=1.2.3
+ENV FILEBEAT_SRC_SHA1=3fde7f5f5ea837140965a193bbb387c131c16d9c \
+    FILEBEAT_VERSION=1.2.3
+    FILEBEAT_URL=http://download.elastic.co/beats/filebeat
 
 RUN set -ex \
   && apk --no-cache add --virtual .build-dependencies curl \
-  && curl -fsSL http://download.elastic.co/beats/filebeat/filebeat-${FILEBEAT_VERSION}-x86_64.tar.gz -o /tmp/filebeat.tar.gz \
+  && curl -fsSL ${FILEBEAT_URL}/filebeat-${FILEBEAT_VERSION}-x86_64.tar.gz -o /tmp/filebeat.tar.gz \
   && cd /tmp \
   && echo "${FILEBEAT_SRC_SHA1} *filebeat.tar.gz" | sha1sum -c - \
   && tar -xzf filebeat.tar.gz \
