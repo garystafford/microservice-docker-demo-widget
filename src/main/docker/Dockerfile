@@ -12,7 +12,7 @@ RUN sh -c 'touch /app.jar' \
 
 # install filebeat
 ENV FILEBEAT_SRC_SHA1=3fde7f5f5ea837140965a193bbb387c131c16d9c \
-    FILEBEAT_VERSION=1.2.3
+    FILEBEAT_VERSION=1.2.3 \
     FILEBEAT_URL=http://download.elastic.co/beats/filebeat
 
 RUN set -ex \
