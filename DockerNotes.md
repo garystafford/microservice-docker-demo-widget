@@ -13,8 +13,7 @@ docker network create \
 
 docker stack rm widget_stack
 
-export CONSUL_SERVER_URL=192.168.99.104
-
+export CONSUL_SERVER_URL=192.168.99.104 && \
 export WIDGET_PROFILE=docker-local && \
 docker stack deploy --compose-file=docker-compose.yml widget_stack
 
