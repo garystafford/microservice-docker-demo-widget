@@ -13,3 +13,4 @@ RUN mkdir /widget \
   && cd /widget \
   && mv widget-service-*.jar widget-service.jar
 ENV JAVA_OPTS=""
+CMD [ "java" "-Djava.security.egd=file:/dev/./urandom", "-jar", "widget/widget-service.jar"]

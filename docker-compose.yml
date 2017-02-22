@@ -1,11 +1,11 @@
 version: '3.0'
 
 services:
-  voter:
+  widget:
     image: garystafford/microservice-docker-demo-widget:latest
     depends_on:
     - widget_stack_mongodb
-    hostname: widget-service
+    hostname: widget
     ports:
     - 8030:8030/tcp
     networks:
@@ -17,7 +17,7 @@ services:
     environment:
     - "SERVICE_NAME=widget-service"
     - "SERVICE_TAGS=service"
-    command: ["java", "-Dspring.profiles.active=${WIDGET_PROFILE}", "-Djava.security.egd=file:/dev/./urandom", "-jar", "widget/widget-service.jar"]
+    command: "java -Dspring.profiles.active=${WIDGET_PROFILE:docker-local} -Djava.security.egd=file:/dev/./urandom -jar widget/widget-service.jar"
 
   mongodb:
     image: mongo:latest
