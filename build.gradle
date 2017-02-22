@@ -47,7 +47,7 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-hateoas'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-consul-all'
-    compile group: 'org.webjars:hal-browser'
+    compile group: 'org.webjars', name: 'hal-browser'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }
 
