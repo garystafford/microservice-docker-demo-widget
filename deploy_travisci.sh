@@ -1,31 +1,38 @@
-#!/bin/bash
+#!/bin/sh
 
-# reference: 	https://gist.github.com/domenic/ec8b0fc8ab45f39403dd
+# Builds and deploys JAR build artifact to GitHub (acts as binary repository)
+# Builds immutable Docker Image, deploying the JAR, above.
 
-# Environment Variables Examples:
-# export GH_TOKEN=721fd28bc24dTh1sIsN0tREaLc2f137b8b5f
-# travis encrypt GH_TOKEN=721fd28bc24dTh1sIsN0tREaLc2f137b8b5f --add
+# Uses encrypted environment variables in .travis.yml file used here
+# travis encrypt GH_TOKEN=<your_token_hash> --add
 # travis encrypt COMMIT_AUTHOR_EMAIL=<your_email_here> --add
-# export GH_REF=github.com/<your_repo_path>.git
+# travis encrypt GH_ARTIFACT_REPO=github.com/<your_repo_path>.git --add
+# travis encrypt DOCKER_USERNAME=<your_username> --add
+# travis encrypt DOCKER_PASSWORD=<your_password> --add
 
-set -e # exit with nonzero exit code if anything fails
+#set -x
 
-# go to the distributions directory and create a *new* Git repo
+# Builds and deploys JAR build artifact to GitHub (acts as binary repository)
 cd build/libs
 git init
-
-# inside this git repo we'll pretend to be a new user
 git config user.name "travis-ci"
 git config user.email "${COMMIT_AUTHOR_EMAIL}"
 
-# The first and only commit to this new Git repo contains all the
-# files present with the commit message.
-rm *.jar.original
-git add .
+git add *.jar
 git commit -m "Deploy Travis CI Build #${TRAVIS_BUILD_NUMBER} artifacts to GitHub"
+git push --force --quiet "https://${GH_TOKEN}@${GH_ARTIFACT_REPO}" master:build-artifacts > /dev/null 2>&1
 
-# Force push from the current repo's master branch to the remote
-# repo's build-artifacts branch. (All previous history on the gh-pages branch
-# will be lost, since we are overwriting it.) We redirect any output to
-# /dev/null to hide any sensitive credential data that might otherwise be exposed.
-git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:build-artifacts > /dev/null 2>&1
+# Builds immutable Docker Image, deploying the JAR, above.
+cd -
+docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
+
+set -ex
+
+sleep 120 # wait for automated Docker Hub build to finish...
+IMAGE="garystafford/microservice-docker-demo-widget"
+docker build -t ${IMAGE}:latest .
+docker push ${IMAGE}:latest
+
+IMAGE_TAG="0.2.${TRAVIS_BUILD_NUMBER}"
+docker tag ${IMAGE}:latest ${IMAGE}:${IMAGE_TAG}
+docker push ${IMAGE}:${IMAGE_TAG}

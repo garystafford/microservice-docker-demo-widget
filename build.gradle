@@ -1,79 +1,69 @@
 buildscript {
+    ext {
+        springBootVersion = '1.5.1.RELEASE'
+    }
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
-
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootGradleVersion}")
-        classpath("se.transmode.gradle:gradle-docker:${gradleDockerVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
 
-group = githubOrganization
+plugins {
+    id "com.gorylenko.gradle-git-properties" version "1.4.17"
+}
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'spring-boot'
-apply plugin: 'docker'
+apply plugin: 'org.springframework.boot'
+
+springBoot {
+    executable = true
+}
+
+def application_name = 'widget-service'
+def major = '0.2'
+def minor = System.env.TRAVIS_BUILD_NUMBER ?: '0'
+def artifact_version = major + '.' + minor
 
 jar {
-    baseName = 'widget-service'
-    version = '0.2.0'
+    baseName = application_name
+    version = artifact_version
 }
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    mavenCentral()
-}
-
-task buildDocker(type: Docker, dependsOn: build) {
-    push = true
-    applicationName = jar.baseName
-    dockerfile = file('src/main/docker/Dockerfile')
-    doFirst {
-        copy {
-            from jar
-            from 'src/main/docker/filebeat.yml'
-            from 'src/main/docker/filebeat.template.json'
-            from 'src/main/docker/logstash-beats.crt'
-            from 'src/main/docker/start.sh'
-            into stageDir
-        }
-    }
-//  dryRun = true
+    jcenter()
 }
 
 dependencies {
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-consul-all'
+    compile group: 'org.springframework.boot', name: 'spring-boot-actuator-docs'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-hateoas'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-consul-all'
+    compile group: 'org.webjars:hal-browser'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = gradleWrapperVersion
 }
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Camden.SR5'
     }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4'
 }
 
 test {
     testLogging {
-        events 'passed', 'skipped', 'failed'
-    }
-}
-
-eclipse {
-    classpath {
-        containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
-        containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+        exceptionFormat "full"
     }
 }
