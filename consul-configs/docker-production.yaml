@@ -1,0 +1,22 @@
+endpoints:
+  enabled: false
+  health:
+    enabled: true
+  info:
+    enabled: true
+  sensitive: true
+logging:
+  level:
+    root: WARN
+management:
+  security:
+    enabled: true
+  info:
+    build:
+      enabled: false
+    git:
+      enabled: false
+spring:
+  data:
+    mongodb:
+      host: mongodb

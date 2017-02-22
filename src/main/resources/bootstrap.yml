@@ -2,6 +2,10 @@ spring:
   application:
     name: widget-service
   cloud:
-    config:
-      uri: ${CONFIG_SERVER_URL:http://localhost:8888}
-      failFast: true
+    consul:
+      host: ${CONSUL_SERVER_URL:http://localhost}
+      port: 8500
+      config:
+        fail-fast: true
+        format: yaml
+        profile-separator: "-"

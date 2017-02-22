@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/widget-service.iml" filepath="$PROJECT_DIR$/widget-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/widget-service.iml" filepath="$PROJECT_DIR$/.idea/modules/widget-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/widget-service_main.iml" filepath="$PROJECT_DIR$/.idea/modules/widget-service_main.iml" group="widget-service" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/widget-service_test.iml" filepath="$PROJECT_DIR$/.idea/modules/widget-service_test.iml" group="widget-service" />
     </modules>
   </component>
 </project>

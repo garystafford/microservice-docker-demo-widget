@@ -1,0 +1,26 @@
+endpoints:
+  enabled: true
+  sensitive: false
+info:
+  java:
+    source: "${java.version}"
+    target: "${java.version}"
+logging:
+  level:
+    root: DEBUG
+management:
+  security:
+    enabled: false
+  info:
+    build:
+      enabled: true
+    git:
+      mode: full
+server:
+  port: 8030
+spring:
+  data:
+    mongodb:
+      database: widgets
+      host: localhost
+      port: 27017

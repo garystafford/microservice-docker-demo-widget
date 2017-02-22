@@ -1,0 +1,6 @@
+data:
+  mongodb:
+    host: mongodb
+logging:
+  level:
+    root: INFO
