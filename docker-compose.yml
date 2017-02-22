@@ -15,9 +15,10 @@ services:
       placement:
         constraints: [node.labels.app == true]
     environment:
+    - "CONSUL_SERVER_URL=${CONSUL_SERVER_URL}"
     - "SERVICE_NAME=widget-service"
     - "SERVICE_TAGS=service"
-    command: "java -Dspring.profiles.active=${WIDGET_PROFILE:docker-local} -Djava.security.egd=file:/dev/./urandom -jar widget/widget-service.jar"
+    command: "java -Dspring.profiles.active=${WIDGET_PROFILE} -Djava.security.egd=file:/dev/./urandom -jar widget/widget-service.jar"
 
   mongodb:
     image: mongo:latest
