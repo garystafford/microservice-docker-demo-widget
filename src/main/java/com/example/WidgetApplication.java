@@ -6,8 +6,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 @SpringBootApplication
-@EnableDiscoveryClient
-@RefreshScope
+// @EnableDiscoveryClient
+// @RefreshScope
 public class WidgetApplication {
 
     public static void main(String[] args) {
