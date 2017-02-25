@@ -18,7 +18,6 @@ services:
     - "CONSUL_SERVER_URL=${CONSUL_SERVER_URL}"
     - "SERVICE_NAME=widget-service"
     - "SERVICE_TAGS=service"
-    - "SERVICE_IGNORE=true"
     command: "java -Dspring.profiles.active=${WIDGET_PROFILE} -Djava.security.egd=file:/dev/./urandom -jar widget/widget-service.jar"
 
   mongodb:
