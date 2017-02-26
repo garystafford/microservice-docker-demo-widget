@@ -9,18 +9,21 @@ eval $(docker-machine env manager1)
 
 CONSUL_SERVER=$(docker-machine ip $(docker node ls | grep Leader | awk '{print $3}'))
 
+# default profile
 KEY="config/widget-service/data"
 VALUE="consul-configs/default.yaml"
 curl -X PUT --data-binary @${VALUE} \
   -H "Content-type: text/x-yaml" \
   ${CONSUL_SERVER:localhost}:8500/v1/kv/${KEY}
 
+# docker-local profile
 KEY="config/widget-service/docker-local/data"
 VALUE="consul-configs/docker-local.yaml"
 curl -X PUT --data-binary @${VALUE} \
   -H "Content-type: text/x-yaml" \
   ${CONSUL_SERVER:localhost}:8500/v1/kv/${KEY}
 
+# docker-production profile
 KEY="config/widget-service/docker-production/data"
 VALUE="consul-configs/docker-production.yaml"
 curl -X PUT --data-binary @${VALUE} \

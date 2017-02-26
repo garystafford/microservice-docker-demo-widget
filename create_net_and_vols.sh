@@ -29,7 +29,6 @@ do
   # docker volume prune -f
   docker volume create --name=widget_data_vol
   echo "Volume created: ${vm}..."
-
 done
 
 echo "Script completed..."
