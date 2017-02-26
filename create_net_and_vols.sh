@@ -10,7 +10,7 @@ eval $(docker-machine env manager1)
 vms=( "manager1" "manager2" "manager3"
       "worker1" "worker2" "worker3" )
 
-# Create overlay network
+# create overlay network
 docker network create \
   --driver overlay \
   --subnet=10.0.0.0/16 \
@@ -21,12 +21,11 @@ docker network create \
 
 echo "Network completed..."
 
-# Create data volumes
+# create data volumes
 for vm in "${vms[@]}"
 do
   docker-machine env ${vm}
   eval $(docker-machine env ${vm})
-  # docker volume prune -f
   docker volume create --name=widget_data_vol
   echo "Volume created: ${vm}..."
 done
