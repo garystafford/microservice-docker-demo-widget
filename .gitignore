@@ -97,3 +97,4 @@ gradle-app.setting
 # Crashlytics plugin (for Android Studio and IntelliJ)
 
 *.log
+.DS_Store
