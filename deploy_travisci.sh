@@ -20,7 +20,7 @@ git config user.email "${COMMIT_AUTHOR_EMAIL}"
 
 git add *.jar
 git commit -m "Deploy Travis CI Build #${TRAVIS_BUILD_NUMBER} artifacts to GitHub"
-git push --force --quiet "https://${GH_TOKEN}@${GH_ARTIFACT_REPO}" master:build-artifacts > /dev/null 2>&1
+git push --force --quiet "https://${GH_TOKEN}@${GH_ARTIFACT_REPO}" consul:build-artifacts > /dev/null 2>&1
 
 # Builds immutable Docker Image, deploying the JAR, above.
 cd -

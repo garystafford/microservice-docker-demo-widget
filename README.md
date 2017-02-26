@@ -1,127 +1,109 @@
-###### Build:  
-![https://travis-ci.org/garystafford/microservice-docker-demo-widget.svg?branch=master](https://travis-ci.org/garystafford/microservice-docker-demo-widget.svg?branch=master)
+Build:  
+![https://travis-ci.org/garystafford/microservice-docker-demo-widget.svg?branch=consul](https://travis-ci.org/garystafford/microservice-docker-demo-widget.svg?branch=consul)
 
-###### Docker Hub (_status using [MicroBadger](https://microbadger.com/#/)_):  
+Docker Hub (_status using [MicroBadger](https://microbadger.com/#/)_):  
 [![](https://images.microbadger.com/badges/version/garystafford/microservice-docker-demo-widget.svg)](http://microbadger.com/images/garystafford/microservice-docker-demo-widget "Get your own version badge on microbadger.com")  [![](https://images.microbadger.com/badges/image/garystafford/microservice-docker-demo-widget.svg)](http://microbadger.com/images/garystafford/microservice-docker-demo-widget "Get your own image badge on microbadger.com")
 
 # Spring Boot Widget Microservice
 
-#### Introduction
-The Widget microservice is one of a set of Java Spring Boot services, for an upcoming post on scaling microservices with the latest Spring and Docker features. Widgets are inanimate objects that users purchase with points. Widgets have particular physical characteristics, such as product id, name, color, size, and current price. An inventory of widgets is stored in the `widgets` MongoDB database.
+## Introduction
+The Widget service is a simple Spring Boot microservice, backed by MongoDB. It is easily deployed as a containerized application.
 
-The post and this associated project present two methods of building the Docker Image containing the Spring Boot service JAR. The Docker Image can be built locally, with Gradle, using Spring Boot with Docker, and pushed directly to Docker Hub. Alternately, the Docker Image can be built using a typical continuous integration (CI) pipeline. The pipeline consists of GitHub, Gradle, Travis CI and/or Semaphore, and DockerHub, using Docker Hub's [automated Dockerfile build feature](https://docs.docker.com/docker-hub/builds).
+It has been developed for the post, '[Distributed Service Configuration with Consul, Spring Cloud, and Docker](http://programmaticponderings.com/2017/02/26/distributed-service-configuration-with-consul-spring-cloud-and-docker)'. The post explore the use of HashiCorp Consul for distributed configuration of containerized Spring Boot microservices, deployed to a Docker swarm cluster.
 
+In the first half of the post, we provision a series of VMs, build a Docker swarm on top of those VMs, and install Consul and Registrator on each swarm host.
 
-#### Technologies
-* Java
-* Spring Boot
+In the second half of the post, we configure and deploy multiple, containerized instances of a Spring Boot microservice, backed by MongoDB, to the swarm cluster, using Docker Compose version 3.
+
+The final objective of the post is have all the deployed services registered with Consul, via Registrator, and the Spring Boot service’s configuration being provided dynamically by Consul, at service startup.
+
+### Objectives
+
+1. Provision a series of virtual machine hosts, using Docker Machine and Oracle VirtualBox
+2. Provide distributed and highly available cluster management and service orchestration, using Docker swarm mode
+3. Provide distributed and highly available service discovery, health checking, and a hierarchical key/value store, using HashiCorp Consul
+4. Provide service registration of containerized services, using Registrator, Glider Labs’ service registry bridge for Docker
+5. Provide distributed configuration for containerized Spring Boot microservices using Consul and Pivotal’s Spring Cloud Consul Config
+6. Deploy multiple instances of a Spring Boot microservice, backed by MongoDB, to the swarm cluster, using Docker Compose version 3.
+
+### Technologies
+* Docker
+* Docker Compose (v3)
+* Docker Hub
+* Docker Machine
+* Docker swarm mode
+* Docker Swarm Visualizer (Mano Marks)
+* Glider Labs Registrator
 * Gradle
+* HashiCorp Consul
+* Java
 * MongoDB
-* Spring Cloud Config Server (migrating to Consul)
-* Spring Cloud Netflix Eureka
-* Spring Boot with Docker
-* The Elastic Stack (Elasticsearch, Kibana, Logstash, and Beats)
-* DockerHub
+* Oracle VirtualBox VM Manager
+* Spring Boot
+* Spring Cloud Consul Config
 * Travis CI
 
-#### MongoDB
-Import sample data to MongoDB locally
-```bash
-# set your project root
-PROJECT_ROOT='/Users/gstaffo/Documents/projects/widget-docker-demo'
+## Quick Start for Local Development
 
-mongoimport --host localhost:27017 --db widgets --collection widget \
+The Widget service runs on port 8030.
+
+The service requires MongoDB to be pre-installed and running locally on port `27017`. The service will create the `widgets` database on startup.
+
+The service also requires Consul to be pre-installed and running locally on port `8500`. Consul needs to contain the widget's default profile, at minimum.
+
+To clone, build, test, and run the service locally:
+
+```bash
+# clone the directory
+git clone --depth 1 --branch consul \
+  https://github.com/garystafford/microservice-docker-demo-widget.git
+cd microservice-docker-demo-widget
+
+# import some seed data into MongoDB
+mongoimport --host localhost:27017 \
+  --db widgets --collection widget \
   --type json --jsonArray \
-  --file ${PROJECT_ROOT}/widget-service/src/main/resources/data/data.json
-```
+  --file widget-service/src/main/resources/data/data.json
 
-Common MongoDB commands
-```bash
-mongo # use mongo shell
-> show dbs
-> use widgets
-> db.widget.find()
-> db.dropDatabase()
-```
-
-#### Build Service Locally
-Note to build, test, and run the Widget service locally, outside of a Docker container, both the [Spring Cloud Config Server](https://github.com/garystafford/microservice-docker-demo-config-server) and [Netflix Eureka](https://github.com/garystafford/microservice-docker-demo-eureka-server) projects must be started first.
-```bash
-./gradlew clean build && \
-  java -jar -Dspring.profiles.active=local \
+# build and start the service
+# with the default spring profile from consul
+./gradlew clean build \
   build/libs/widget-service-0.2.0.jar
 ```
 
-#### Test Service Locally
-Create a new widget
+## Using the Service Locally
+Widgets represent inanimate objects that users purchase with points. Widgets have particular physical characteristics, such as product id, name, color, size, and current price. An inventory of widgets is stored in the `widgets` MongoDB database. They can created, modified, deleted, and read from MongoDB, by the service.
+
+Create a new widget:
 ```bash
-curl -i -X POST -H "Content-Type:application/json" -d '{
-  "product_id": "N212QZOD9B",
-  "name": "Pentwist",
-  "color": "Gray",
-  "size": "Huge",
-  "price": 75,
-  "inventory": 5,
-  "preview": "https://s3.amazonaws.com/widgets-microservice-demo/N212QZOD9B.png"
-}' http://localhost:8030/widgets
+curl -i -X POST -H "Content-Type:application/json" -d \
+  '{
+    "product_id": "N212QZOD9B",
+    "name": "Pentwist",
+    "color": "Gray",
+    "size": "Huge",
+    "price": 75,
+    "inventory": 5,
+    "preview": "<no_preview_available>"
+  }' \
+  http://localhost:8030/widgets
 ```
-Create another new widget
+Create another new widget:
 ```bash
-curl -i -X POST -H "Content-Type:application/json" -d '{
-  "product_id": "N43WV5234S",
-  "name": "Zapster",
-  "color": "Green",
-  "size": "Tiny",
-  "price": 5,
-  "inventory": 4,
-  "preview": "https://s3.amazonaws.com/widgets-microservice-demo/N43WV5234S.png"
-}' http://localhost:8030/widgets
+curl -i -X POST -H "Content-Type:application/json" -d \
+  '{
+    "product_id": "N43WV5234S",
+    "name": "Zapster",
+    "color": "Green",
+    "size": "Tiny",
+    "price": 5,
+    "inventory": 4,
+    "preview": "<no_preview_available>"
+  }' \
+  http://localhost:8030/widgets
 ```
 
-Get all widgets
+Get all widgets (command uses `[jq](https://stedolan.github.io/jq/)`)
 ```bash
-curl -i -X GET http://localhost:8030/widgets | prettyjson
+curl -i -X GET http://localhost:8030/widgets | jq .
 ```
-
-#### Building Docker Images with Spring Boot with Docker
-Change the `group` key in `build.gradle` to you DockerHub repository name, such as
-```text
-group = '<your_dockerhub_repo_name>'
-```
-
-Login to your Docker Hub account from command line
-```bash
-docker login
-```
-
-Build the Docker Image containing the Spring Boot service JAR
-```bash
-./gradlew clean build buildDocker
-```
-If `push = true` was set in the `buildDocker` method of the `build.gradle`, the images
-is automatically pushed to your DockerHub account.
-
-If you chose to set `push = false` within the `buildDocker` method of the `build.gradle`,
-then use the following type of command to push the new Docker Image to DockerHub, after it is built.
-```bash
-docker push <your_dockerhub_repo_name>/widget-service:latest
-```
-
-Create and run a Docker container
-```bash
-docker run -e "SPRING_PROFILES_ACTIVE=production" -p 8030:8030 -t garystafford/widget-service
-```
-
-Import sample data to MongoDB running in the Docker container
-```bash
-# set your project root
-PROJECT_ROOT='/Users/gstaffo/Documents/projects/widget-docker-demo'
-
-mongoimport --host localhost:27018 --db widgets --collection widget \
-  --type json --jsonArray \
-  --file ${PROJECT_ROOT}/widget-service/src/main/resources/data/data.json
-```
-
-#### References
-* [https://github.com/Transmode/gradle-docker](https://github.com/Transmode/gradle-docker)
-* [https://github.com/bmuschko/gradle-docker-plugin](https://github.com/bmuschko/gradle-docker-plugin)

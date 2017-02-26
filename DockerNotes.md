@@ -41,3 +41,10 @@ https://blog.bugsnag.com/container-orchestration-with-docker-swarm-mode/
 https://github.com/jhipster/consul-config-loader/blob/master/config/application.yml
 http://www.kennybastani.com/2015/07/spring-cloud-docker-microservices.html
 https://cloud.spring.io/spring-cloud-consul/#spring-cloud-consul-config
+
+
+KEY="config/widget-service/data"
+VALUE="/Users/gstaffo/Documents/projects/widget-docker-demo/widget-service/consul-configs/default.yaml"
+curl -X POST --data-binary @${VALUE} -H "Content-type: text/x-yaml" ${CONSUL_SERVER_IP}:8500/v1/kv/${KEY}
+
+curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' ${CONSUL_SERVER_IP}:8030/widget
