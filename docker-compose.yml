@@ -15,7 +15,7 @@ services:
       placement:
         constraints: [node.role == worker]
     environment:
-    - "CONSUL_SERVER_URL=${CONSUL_SERVER_URL}"
+    - "CONSUL_SERVER_URL=${CONSUL_SERVER}"
     - "SERVICE_NAME=widget-service"
     - "SERVICE_TAGS=service"
     command: "java -Dspring.profiles.active=${WIDGET_PROFILE} -Djava.security.egd=file:/dev/./urandom -jar widget/widget-service.jar"

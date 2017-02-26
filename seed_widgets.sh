@@ -1,10 +1,13 @@
 #!/bin/sh
 
-# Create (11) new widget documents into the widget collection of the widgets database
-# Script expects the WIDGET_SERVICE environment variable to be set, or defaults to localhost
-# WIDGET_SERVICE a hostname or IP address of a running instance of the widget service
-
+# Creates (11) new widget documents into the widget collection of the widgets database
+# Assumes an instance of the Widget service is running on worker1 worker node
 set -e
+
+docker-machine env manager1
+eval $(docker-machine env manager1)
+
+WIDGET_SERVICE=$(docker-machine ip worker1)
 
 widgets=(
   "{\"product_id\":\"RTHGP1FCGN\",\"name\":\"Reflupper\",\"color\":\"Red\",\"size\":\"Large\",\"price\":30,\"inventory\":5,\"preview\":\"<no_preview_available>\"}"
