@@ -27,7 +27,7 @@ for widget in ${widgets[@]}
 do
   curl -S -s -H "Content-Type: application/json" \
     -X POST -d ${widget} \
-    "http://${WIDGET_SERVICE:localhost}:8030/widgets" \
+    "http://${WIDGET_SERVICE:localhost}:8030/widget" \
     > /dev/null
     echo "New widget posted..."
 done
