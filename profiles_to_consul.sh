@@ -11,21 +11,23 @@ CONSUL_SERVER=$(docker-machine ip $(docker node ls | grep Leader | awk '{print $
 
 # default profile
 KEY="config/widget-service/data"
-VALUE="consul-configs/default.yaml"
+VALUE="consul-configs/default.yml"
 curl -X PUT --data-binary @${VALUE} \
   -H "Content-type: text/x-yaml" \
   ${CONSUL_SERVER:localhost}:8500/v1/kv/${KEY}
 
 # docker-local profile
-KEY="config/widget-service/docker-local/data"
-VALUE="consul-configs/docker-local.yaml"
+KEY="config/widget-service,docker-local/data"
+VALUE="consul-configs/docker-local.yml"
 curl -X PUT --data-binary @${VALUE} \
   -H "Content-type: text/x-yaml" \
   ${CONSUL_SERVER:localhost}:8500/v1/kv/${KEY}
 
 # docker-production profile
-KEY="config/widget-service/docker-production/data"
-VALUE="consul-configs/docker-production.yaml"
+KEY="config/widget-service,docker-production/data"
+VALUE="consul-configs/docker-production.yml"
 curl -X PUT --data-binary @${VALUE} \
   -H "Content-type: text/x-yaml" \
   ${CONSUL_SERVER:localhost}:8500/v1/kv/${KEY}
+
+echo "Script completed..."

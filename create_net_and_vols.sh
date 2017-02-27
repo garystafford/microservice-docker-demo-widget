@@ -7,9 +7,6 @@ set -e
 docker-machine env manager1
 eval $(docker-machine env manager1)
 
-vms=( "manager1" "manager2" "manager3"
-      "worker1" "worker2" "worker3" )
-
 # create overlay network
 docker network create \
   --driver overlay \
@@ -22,6 +19,9 @@ docker network create \
 echo "Network completed..."
 
 # create data volumes
+vms=( "manager1" "manager2" "manager3"
+      "worker1" "worker2" "worker3" )
+
 for vm in "${vms[@]}"
 do
   docker-machine env ${vm}
