@@ -4,7 +4,7 @@ services:
   widget:
     image: garystafford/microservice-docker-demo-widget:latest
     depends_on:
-    - widget_stack_mongodb
+    - mongodb
     hostname: widget
     ports:
     - 8030:8030/tcp

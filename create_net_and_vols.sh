@@ -7,7 +7,7 @@ set -e
 docker-machine env manager1
 eval $(docker-machine env manager1)
 
-# create overlay network
+# create overlay network for stack
 docker network create \
   --driver overlay \
   --subnet=10.0.0.0/16 \
@@ -18,11 +18,11 @@ docker network create \
 
 echo "Network completed..."
 
-# create data volumes
+# create data volumes for MongoDB
 vms=( "manager1" "manager2" "manager3"
       "worker1" "worker2" "worker3" )
 
-for vm in "${vms[@]}"
+for vm in "${vms[@]:3:3}"
 do
   docker-machine env ${vm}
   eval $(docker-machine env ${vm})

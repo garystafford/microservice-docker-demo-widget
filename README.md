@@ -7,15 +7,9 @@ Docker Hub (_status using [MicroBadger](https://microbadger.com/#/)_):
 # Spring Boot Widget Microservice
 
 ## Introduction
-The Widget service is a simple Spring Boot microservice, backed by MongoDB. It is easily deployed as a containerized application.
+The Widget service is a simple Spring Boot microservice, backed by MongoDB. It is easily deployed as a containerized application. It has been developed for the post, '[Distributed Service Configuration with Consul, Spring Cloud, and Docker](http://programmaticponderings.com/2017/02/26/distributed-service-configuration-with-consul-spring-cloud-and-docker)'. The post explore the use of HashiCorp Consul for distributed configuration of containerized Spring Boot microservices, deployed to a Docker swarm cluster.
 
-It has been developed for the post, '[Distributed Service Configuration with Consul, Spring Cloud, and Docker](http://programmaticponderings.com/2017/02/26/distributed-service-configuration-with-consul-spring-cloud-and-docker)'. The post explore the use of HashiCorp Consul for distributed configuration of containerized Spring Boot microservices, deployed to a Docker swarm cluster.
-
-In the first half of the post, we provision a series of VMs, build a Docker swarm on top of those VMs, and install Consul and Registrator on each swarm host.
-
-In the second half of the post, we configure and deploy multiple, containerized instances of a Spring Boot microservice, backed by MongoDB, to the swarm cluster, using Docker Compose version 3.
-
-The final objective of the post is have all the deployed services registered with Consul, via Registrator, and the Spring Boot service’s configuration being provided dynamically by Consul, at service startup.
+In the first half of the post, we provision a series of VMs, build a Docker swarm cluster on top of those VMs, and install Consul and Registrator on each swarm host. In the second half of the post, we configure and deploy multiple, containerized instances of a Spring Boot microservice, backed by MongoDB, to the swarm cluster, using Docker Compose version 3. The final objective of the post is have all the deployed services registered with Consul, via Registrator, and the Spring Boot service’s configuration being provided dynamically by Consul, at service startup.
 
 ### Objectives
 
@@ -49,7 +43,7 @@ The Widget service runs on port 8030.
 
 The service requires MongoDB to be pre-installed and running locally on port `27017`. The service will create the `widgets` database on startup.
 
-The service also requires Consul to be pre-installed and running locally on port `8500`. Consul needs to contain the widget's default profile, at minimum.
+The service also requires Consul to be pre-installed and running on ${CONSUL_SERVER_URL} locally on port `8500`. Consul needs to contain the widget's default profile, at minimum.
 
 To clone, build, test, and run the service locally:
 
@@ -59,7 +53,7 @@ git clone --depth 1 --branch consul \
   https://github.com/garystafford/microservice-docker-demo-widget.git
 cd microservice-docker-demo-widget
 
-# import some seed data into MongoDB
+# optional: import some seed data into MongoDB
 mongoimport --host localhost:27017 \
   --db widgets --collection widget \
   --type json --jsonArray \
@@ -67,8 +61,8 @@ mongoimport --host localhost:27017 \
 
 # build and start the service
 # with the default spring profile from consul
-./gradlew clean build \
-  build/libs/widget-service-0.2.0.jar
+./gradlew clean cleanTest build
+java -jar build/libs/widget-service-0.2.0.jar
 ```
 
 ## Using the Service Locally
@@ -107,3 +101,12 @@ Get all widgets (command uses `[jq](https://stedolan.github.io/jq/)`)
 ```bash
 curl -i -X GET http://localhost:8030/widgets | jq .
 ```
+
+### Project Scripts
+
+#### Stand-Up Project
+
+1. profiles_to_consul.sh
+2. create_net_and_vols.sh
+3. deploy_stack.sh
+4. seed_widgets.sh
