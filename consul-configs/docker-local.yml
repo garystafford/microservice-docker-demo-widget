@@ -1,6 +1,7 @@
-data:
-  mongodb:
-    host: mongodb
 logging:
   level:
     root: INFO
+spring:
+  data:
+    mongodb:
+      host: mongodb
