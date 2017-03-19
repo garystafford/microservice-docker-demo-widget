@@ -7,7 +7,7 @@ Docker Hub (_status using [MicroBadger](https://microbadger.com/#/)_):
 # Spring Boot Widget Microservice
 
 ## Introduction
-The Widget service is a simple Spring Boot microservice, backed by MongoDB. It is easily deployed as a containerized application. It has been developed for the post, '[Distributed Service Configuration with Consul, Spring Cloud, and Docker](http://programmaticponderings.com/2017/02/26/distributed-service-configuration-with-consul-spring-cloud-and-docker)'. The post explore the use of HashiCorp Consul for distributed configuration of containerized Spring Boot microservices, deployed to a Docker swarm cluster.
+The Widget service is a simple Spring Boot microservice, backed by MongoDB. It is easily deployed as a containerized application. It has been developed for the post, '[Distributed Service Configuration with Consul, Spring Cloud, and Docker](http://wp.me/p1RD28-36b)'. The post explore the use of HashiCorp Consul for distributed configuration of containerized Spring Boot microservices, deployed to a Docker swarm cluster.
 
 In the first half of the post, we provision a series of VMs, build a Docker swarm cluster on top of those VMs, and install Consul and Registrator on each swarm host. In the second half of the post, we configure and deploy multiple, containerized instances of a Spring Boot microservice, backed by MongoDB, to the swarm cluster, using Docker Compose version 3. The final objective of the post is have all the deployed services registered with Consul, via Registrator, and the Spring Boot service’s configuration being provided dynamically by Consul, at service startup.
 
