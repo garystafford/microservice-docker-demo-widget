@@ -62,11 +62,10 @@ services:
 
   elk:
     # image: sebp/elk:latest
-    image: garystafford/sebp-elk:latest
+    image: sebp/elk:latest
     ports:
     - "5601:5601/tcp"
     - "9200:9200/tcp"
-    - "9201:9200/tcp"
     - "5044:5044/tcp"
     depends_on:
     - fluentd
