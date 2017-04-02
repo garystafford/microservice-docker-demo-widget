@@ -15,13 +15,12 @@ docker stack ps widget_stack --no-trunc
 docker service rm widget_stack_fluentd
 sh deploy_stack.sh
 
-docker-machine env worker1
-eval $(docker-machine env worker1)
-
-docker container inspect  $(docker ps | grep fluent | awk '{print $NF}')
+docker-machine env worker2
+eval $(docker-machine env worker2)
 
 docker exec -it  $(docker ps | grep fluent | awk '{print $NF}') cat /fluentd/log/docker.log && date -u
 docker logs  $(docker ps | grep fluent | awk '{print $NF}') --follow
+docker container inspect  $(docker ps | grep fluent | awk '{print $NF}')
 ```
 
 Refresh Spring service after changing logging level of in Consul

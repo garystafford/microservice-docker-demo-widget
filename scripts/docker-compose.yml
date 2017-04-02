@@ -3,6 +3,7 @@ version: '3.0'
 services:
   widget:
     image: garystafford/microservice-docker-demo-widget:latest
+    hostname: widget
     depends_on:
     - mongodb
     - fluentd
@@ -25,7 +26,7 @@ services:
         - node.hostname != worker3
     environment:
     - "CONSUL_SERVER_URL=${CONSUL_SERVER}"
-    - "SERVICE_NAME=widget-service"
+    - "SERVICE_NAME=widget"
     - "SERVICE_TAGS=service"
     command: "java -Dspring.profiles.active=${WIDGET_PROFILE} \
       -Djava.security.egd=file:/dev/./urandom \
@@ -33,6 +34,7 @@ services:
 
   mongodb:
     image: mongo:latest
+    hostname: mongodb
     command:
     - --smallfiles
     depends_on:
@@ -61,8 +63,8 @@ services:
     - "SERVICE_TAGS=database"
 
   elk:
-    # image: sebp/elk:latest
     image: sebp/elk:latest
+    hostname: elk
     ports:
     - "5601:5601/tcp"
     - "9200:9200/tcp"
@@ -77,16 +79,20 @@ services:
       replicas: 1
       placement:
         constraints: [node.hostname == worker3]
+    environment:
+    - "SERVICE_NAME=elk"
+    - "SERVICE_TAGS=logging"
 
   fluentd:
     image: garystafford/custom-fluentd:latest
+    hostname: fluentd
     ports:
     - "24224:24224/tcp"
     - "24224:24224/udp"
     networks:
     - widget_overlay_net
-    volumes:
-    - /Users/gstaffo/Documents/projects/widget-docker-demo/widget-service/scripts/fluent.conf:/fluentd/etc/fluent.conf
+    # volumes:
+    # - /Users/gstaffo/Documents/projects/widget-docker-demo/widget-service/scripts/fluent.conf:/fluentd/etc/fluent.conf
     deploy:
       mode: global
       placement:
