@@ -16,6 +16,8 @@ curl -X PUT --data-binary @${VALUE} \
   -H "Content-type: text/x-yaml" \
   ${CONSUL_SERVER:localhost}:8500/v1/kv/${KEY}
 
+echo "default profile complete..."
+
 # docker-local profile
 KEY="config/widget-service,docker-local/data"
 VALUE="consul-configs/docker-local.yml"
@@ -23,11 +25,15 @@ curl -X PUT --data-binary @${VALUE} \
   -H "Content-type: text/x-yaml" \
   ${CONSUL_SERVER:localhost}:8500/v1/kv/${KEY}
 
+echo "docker-local profile complete..."
+
 # docker-production profile
 KEY="config/widget-service,docker-production/data"
 VALUE="consul-configs/docker-production.yml"
 curl -X PUT --data-binary @${VALUE} \
   -H "Content-type: text/x-yaml" \
   ${CONSUL_SERVER:localhost}:8500/v1/kv/${KEY}
+
+echo "docker-production profile complete..."
 
 echo "Script completed..."

@@ -10,11 +10,10 @@ eval $(docker-machine env manager1)
 # create overlay network for stack
 docker network create \
   --driver overlay \
-  --subnet=10.0.0.0/16 \
-  --ip-range=10.0.11.0/24 \
+  --subnet 10.0.9.0/24 \
   --opt encrypted \
-  --attachable=true \
-  widget_overlay_net
+  widget_overlay_net \
+|| echo "Already installed?"
 
 echo "Network completed..."
 
@@ -26,7 +25,8 @@ for vm in "${vms[@]:3:3}"
 do
   docker-machine env ${vm}
   eval $(docker-machine env ${vm})
-  docker volume create --name=widget_data_vol
+  docker volume create --name=widget_data_vol \
+  || echo "Already installed?"
   echo "Volume created: ${vm}..."
 done
 

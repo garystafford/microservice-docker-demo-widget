@@ -1,0 +1,106 @@
+version: '3.0'
+
+services:
+  widget:
+    image: garystafford/microservice-docker-demo-widget:latest
+    depends_on:
+    - mongodb
+    - fluentd
+    ports:
+    - 8030:8030/tcp
+    networks:
+    - widget_overlay_net
+    logging:
+      driver: fluentd
+      options:
+        tag: docker.{{.Name}}
+        fluentd-address: localhost:24224
+        env: development
+        labels: docker.{{.Name}}
+    deploy:
+      mode: global
+      placement:
+        constraints:
+        - node.role == worker
+        - node.hostname != worker3
+    environment:
+    - "CONSUL_SERVER_URL=${CONSUL_SERVER}"
+    - "SERVICE_NAME=widget-service"
+    - "SERVICE_TAGS=service"
+    command: "java -Dspring.profiles.active=${WIDGET_PROFILE} \
+      -Djava.security.egd=file:/dev/./urandom \
+      -jar widget/widget-service.jar"
+
+  mongodb:
+    image: mongo:latest
+    command:
+    - --smallfiles
+    depends_on:
+    - fluentd
+    ports:
+    - 27017:27017/tcp
+    networks:
+    - widget_overlay_net
+    volumes:
+    - widget_data_vol:/data/db
+    logging:
+      driver: fluentd
+      options:
+        tag: docker.{{.Name}}
+        fluentd-address: localhost:24224
+        env: development
+        labels: docker.{{.Name}}
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+        - node.role == worker
+        - node.hostname != worker3
+    environment:
+    - "SERVICE_NAME=mongodb"
+    - "SERVICE_TAGS=database"
+
+  elk:
+    # image: sebp/elk:latest
+    image: garystafford/sebp-elk:latest
+    ports:
+    - "5601:5601/tcp"
+    - "9200:9200/tcp"
+    - "9201:9200/tcp"
+    - "5044:5044/tcp"
+    depends_on:
+    - fluentd
+    networks:
+    - widget_overlay_net
+    volumes:
+    - widget_data_vol:/var/lib/elasticsearch
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname == worker3]
+
+  fluentd:
+    image: garystafford/custom-fluentd:latest
+    ports:
+    - "24224:24224/tcp"
+    - "24224:24224/udp"
+    networks:
+    - widget_overlay_net
+    volumes:
+    - /Users/gstaffo/Documents/projects/widget-docker-demo/widget-service/scripts/fluent.conf:/fluentd/etc/fluent.conf
+    deploy:
+      mode: global
+      placement:
+        constraints:
+        - node.role == worker
+    environment:
+    - "SERVICE_NAME=fluentd"
+    - "SERVICE_TAGS=logging"
+
+networks:
+  widget_overlay_net:
+    external: true
+
+volumes:
+  widget_data_vol:
+    external: true

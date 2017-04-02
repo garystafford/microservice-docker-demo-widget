@@ -13,7 +13,7 @@ export WIDGET_PROFILE=docker-local
 docker stack deploy --compose-file=docker-compose.yml widget_stack
 
 echo "Letting services start-up..."
-sleep 10
+sleep 5
 
 docker stack ls
 docker stack ps widget_stack
