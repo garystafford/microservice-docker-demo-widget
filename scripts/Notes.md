@@ -38,8 +38,6 @@ curl -X POST "http://${HOST_IP}:8030/refresh"
 # Fix VM Max Error on VM for ELK Container
 
 ```bash
-# sudo su -
-# echo "vm.max_map_count=262144" >> /etc/sysctl.conf
 docker-machine ssh worker3 sudo sysctl -w vm.max_map_count=262144
 docker-machine ssh worker3 sudo sysctl -n vm.max_map_count
 ```
