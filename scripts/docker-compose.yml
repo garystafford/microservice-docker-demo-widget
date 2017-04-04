@@ -62,46 +62,6 @@ services:
     - "SERVICE_NAME=mongodb"
     - "SERVICE_TAGS=database"
 
-  elk:
-    image: sebp/elk:latest
-    hostname: elk
-    ports:
-    - "5601:5601/tcp"
-    - "9200:9200/tcp"
-    - "5044:5044/tcp"
-    depends_on:
-    - fluentd
-    networks:
-    - widget_overlay_net
-    volumes:
-    - widget_data_vol:/var/lib/elasticsearch
-    deploy:
-      replicas: 1
-      placement:
-        constraints: [node.hostname == worker3]
-    environment:
-    - "SERVICE_NAME=elk"
-    - "SERVICE_TAGS=logging"
-
-  fluentd:
-    image: garystafford/custom-fluentd:latest
-    hostname: fluentd
-    ports:
-    - "24224:24224/tcp"
-    - "24224:24224/udp"
-    networks:
-    - widget_overlay_net
-    # volumes:
-    # - /Users/gstaffo/Documents/projects/widget-docker-demo/widget-service/scripts/fluent.conf:/fluentd/etc/fluent.conf
-    deploy:
-      mode: global
-      placement:
-        constraints:
-        - node.role == worker
-    environment:
-    - "SERVICE_NAME=fluentd"
-    - "SERVICE_TAGS=logging"
-
 networks:
   widget_overlay_net:
     external: true

@@ -16,7 +16,7 @@ echo "Letting services start-up..."
 sleep 5
 
 docker stack ls
-docker stack ps widget_stack
+docker stack ps widget_stack --no-trunc
 docker service ls
 
 echo "Script completed..."
