@@ -6,7 +6,6 @@ services:
     hostname: widget
     depends_on:
     - mongodb
-    - fluentd
     ports:
     - 8030:8030/tcp
     networks:
@@ -17,7 +16,6 @@ services:
         tag: docker.{{.Name}}
         fluentd-address: localhost:24224
         env: development
-        labels: docker.{{.Name}}
     deploy:
       mode: global
       placement:
@@ -37,8 +35,6 @@ services:
     hostname: mongodb
     command:
     - --smallfiles
-    depends_on:
-    - fluentd
     ports:
     - 27017:27017/tcp
     networks:
@@ -51,7 +47,6 @@ services:
         tag: docker.{{.Name}}
         fluentd-address: localhost:24224
         env: development
-        labels: docker.{{.Name}}
     deploy:
       replicas: 1
       placement:
