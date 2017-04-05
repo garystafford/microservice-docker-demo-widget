@@ -107,6 +107,5 @@ curl -i -X GET http://localhost:8030/widgets | jq .
 #### Stand-Up Project
 
 1. profiles_to_consul.sh
-2. create_net_and_vols.sh
-3. deploy_stack.sh
-4. seed_widgets.sh
+2. deploy_stack.sh
+3. seed_widgets.sh
