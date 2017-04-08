@@ -1,41 +1,46 @@
-Build:  
+Build:<br>
 ![https://travis-ci.org/garystafford/microservice-docker-demo-widget.svg?branch=fluentd](https://travis-ci.org/garystafford/microservice-docker-demo-widget.svg?branch=consul)
 
-Docker Hub (_status using [MicroBadger](https://microbadger.com/#/)_):  
-[![](https://images.microbadger.com/badges/version/garystafford/microservice-docker-demo-widget.svg)](http://microbadger.com/images/garystafford/microservice-docker-demo-widget "Get your own version badge on microbadger.com")  [![](https://images.microbadger.com/badges/image/garystafford/microservice-docker-demo-widget.svg)](http://microbadger.com/images/garystafford/microservice-docker-demo-widget "Get your own image badge on microbadger.com")
+Docker Hub (_status using [MicroBadger](https://microbadger.com/#/)_):<br>
+[![](https://images.microbadger.com/badges/version/garystafford/microservice-docker-demo-widget.svg)](http://microbadger.com/images/garystafford/microservice-docker-demo-widget "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/garystafford/microservice-docker-demo-widget.svg)](http://microbadger.com/images/garystafford/microservice-docker-demo-widget "Get your own image badge on microbadger.com")
 
 # Spring Boot Widget Microservice
 
 ## Introduction
+
 The Widget service is a simple Spring Boot microservice, backed by MongoDB. It is easily deployed as a containerized application. It has been developed for the post, '[Distributed Service Configuration with Consul, Spring Cloud, and Docker](http://wp.me/p1RD28-36b)'. The post explore the use of HashiCorp Consul for distributed configuration of containerized Spring Boot microservices, deployed to a Docker swarm cluster.
 
-In the first half of the post, we provision a series of VMs, build a Docker swarm cluster on top of those VMs, and install Consul and Registrator on each swarm host. In the second half of the post, we configure and deploy multiple, containerized instances of a Spring Boot microservice, backed by MongoDB, to the swarm cluster, using Docker Compose version 3. The final objective of the post is have all the deployed services registered with Consul, via Registrator, and the Spring Boot service’s configuration being provided dynamically by Consul, at service startup.
+In the first half of the post, we provision a series of VMs, build a Docker swarm cluster on top of those VMs, and install Consul and Registrator on each swarm host. In the second half of the post, we configure and deploy multiple, containerized instances of a Spring Boot microservice, backed by MongoDB, to the swarm cluster, using Docker Compose version 3\. The final objective of the post is have all the deployed services registered with Consul, via Registrator, and the Spring Boot service's configuration being provided dynamically by Consul, at service startup.
 
 ### Objectives
 
 1. Provision a series of virtual machine hosts, using Docker Machine and Oracle VirtualBox
 2. Provide distributed and highly available cluster management and service orchestration, using Docker swarm mode
 3. Provide distributed and highly available service discovery, health checking, and a hierarchical key/value store, using HashiCorp Consul
-4. Provide service registration of containerized services, using Registrator, Glider Labs’ service registry bridge for Docker
-5. Provide distributed configuration for containerized Spring Boot microservices using Consul and Pivotal’s Spring Cloud Consul Config
-6. Deploy multiple instances of a Spring Boot microservice, backed by MongoDB, to the swarm cluster, using Docker Compose version 3.
+4. Provide automatic service registration of containerized services using Registrator, Glider Labs' service registry bridge for Docker
+5. Provide distributed configuration for containerized services using Consul and Pivotal's Spring Cloud Consul Config
+6. Provide centralized logging for containerized services using FluentD and ELK.
+7. Deploy multiple instances of a containerized Spring Boot microservice, backed by MongoDB, to the swarm cluster, using Docker Compose version 3.
 
 ### Technologies
-* Docker
-* Docker Compose (v3)
-* Docker Hub
-* Docker Machine
-* Docker swarm mode
-* Docker Swarm Visualizer (Mano Marks)
-* Glider Labs Registrator
-* Gradle
-* HashiCorp Consul
-* Java
-* MongoDB
-* Oracle VirtualBox VM Manager
-* Spring Boot
-* Spring Cloud Consul Config
-* Travis CI
+
+- Docker
+- Docker Compose (v3)
+- Docker Hub
+- Docker Machine
+- Docker swarm mode
+- Docker Swarm Visualizer (Mano Marks)
+- ELK Stack
+- FluentD
+- Glider Labs Registrator
+- Gradle
+- HashiCorp Consul
+- Java 8
+- MongoDB
+- Oracle VirtualBox VM Manager
+- Spring Boot
+- Spring Cloud Consul Config
+- Travis CI
 
 ## Quick Start for Local Development
 
@@ -66,9 +71,11 @@ java -jar build/libs/widget-service-0.2.0.jar
 ```
 
 ## Using the Service Locally
+
 Widgets represent inanimate objects that users purchase with points. Widgets have particular physical characteristics, such as product id, name, color, size, and current price. An inventory of widgets is stored in the `widgets` MongoDB database. They can created, modified, deleted, and read from MongoDB, by the service.
 
 Create a new widget:
+
 ```bash
 curl -i -X POST -H "Content-Type:application/json" -d \
   '{
@@ -82,7 +89,9 @@ curl -i -X POST -H "Content-Type:application/json" -d \
   }' \
   http://localhost:8030/widgets
 ```
+
 Create another new widget:
+
 ```bash
 curl -i -X POST -H "Content-Type:application/json" -d \
   '{
@@ -98,6 +107,7 @@ curl -i -X POST -H "Content-Type:application/json" -d \
 ```
 
 Get all widgets (command uses `[jq](https://stedolan.github.io/jq/)`)
+
 ```bash
 curl -i -X GET http://localhost:8030/widgets | jq .
 ```

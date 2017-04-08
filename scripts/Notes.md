@@ -6,13 +6,14 @@ Helpful commands
 docker-machine env manager1
 eval $(docker-machine env manager1)
 
-docker stack rm widget_stack
+sh deploy_stack.sh
 docker stack ps widget_stack --no-trunc
 
-sh deploy_stack.sh
+docker stack rm widget_stack
 ```
 
-Refresh Spring service after changing logging level of in Consul
+Refresh Widget service after changing active Spring Profile in Consul
+For example, changing logging level of in Consul
 
 ```bash
 HOST_IP=$(docker-machine ip worker2)
