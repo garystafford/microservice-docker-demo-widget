@@ -20,3 +20,5 @@ do
   sleep $SLEEPTIME
   let ATTEMPTS-=1
 done
+
+curl -s "${HOST_IP}:8030/widgets"
