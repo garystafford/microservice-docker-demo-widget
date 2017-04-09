@@ -16,6 +16,7 @@ services:
         tag: docker.{{.Name}}
         fluentd-address: localhost:24224
         labels: environment=development
+        env: environment=development
     deploy:
       mode: global
       placement:
@@ -47,6 +48,7 @@ services:
         tag: docker.{{.Name}}
         fluentd-address: localhost:24224
         labels: environment=development
+        env: environment=development
     deploy:
       replicas: 1
       placement:
