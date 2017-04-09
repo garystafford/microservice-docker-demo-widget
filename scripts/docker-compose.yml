@@ -21,7 +21,6 @@ services:
       placement:
         constraints:
         - node.role == worker
-        - node.hostname != worker3
     environment:
     - "CONSUL_SERVER_URL=${CONSUL_SERVER}"
     - "SERVICE_NAME=widget"
