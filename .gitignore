@@ -96,5 +96,6 @@ gradle-app.setting
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
 
-*.log
-.DS_Store
+**.log
+**.DS_Store
+**.icloud
