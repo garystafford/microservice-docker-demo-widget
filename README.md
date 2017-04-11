@@ -54,7 +54,7 @@ To clone, build, test, and run the service locally:
 
 ```bash
 # clone the directory
-git clone --depth 1 --branch consul \
+git clone --depth 1 --branch fluentd \
   https://github.com/garystafford/microservice-docker-demo-widget.git
 cd microservice-docker-demo-widget
 
@@ -116,6 +116,11 @@ curl -i -X GET http://localhost:8030/widgets | jq .
 
 #### Stand-Up Project
 
-1. profiles_to_consul.sh
-2. deploy_stack.sh
-3. seed_widgets.sh
+```bash
+cd scripts/
+
+sh ./profiles_to_consul.sh # pushes widget spring profiles to consul
+sh ./stack_deploy.sh # deploys widget and mongodb containers
+sh ./validate_stack.sh # waits/tests for all containers to start
+sh ./seed_widgets.sh # creates a series of sample widget entries
+```
