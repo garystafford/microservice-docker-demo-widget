@@ -15,8 +15,10 @@ services:
       options:
         tag: docker.{{.Name}}
         fluentd-address: localhost:24224
-        labels: environment
-        env: development
+        labels: com.widget.environment
+        env: SERVICE_NAME, SERVICE_TAGS
+    labels:
+    - "com.widget.environment: ${ENVIRONMENT}"
     deploy:
       mode: global
       placement:
@@ -26,7 +28,7 @@ services:
     - "CONSUL_SERVER_URL=${CONSUL_SERVER}"
     - "SERVICE_NAME=widget"
     - "SERVICE_TAGS=service"
-    command: "java -Dspring.profiles.active=${WIDGET_PROFILE} \
+    command: "java -Dspring.profiles.active=${ACTIVE_PROFILE} \
       -Djava.security.egd=file:/dev/./urandom \
       -jar widget/widget-service.jar"
 
@@ -46,8 +48,10 @@ services:
       options:
         tag: docker.{{.Name}}
         fluentd-address: localhost:24224
-        labels: environment
-        env: development
+        labels: com.widget.environment
+        env: SERVICE_NAME, SERVICE_TAGS, WIDGET_PROFILE
+    labels:
+    - "com.widget.environment: ${ENVIRONMENT}"
     deploy:
       replicas: 1
       placement:
