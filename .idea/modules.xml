@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/widget-service.iml" filepath="$PROJECT_DIR$/.idea/modules/widget-service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/widget-service_main.iml" filepath="$PROJECT_DIR$/.idea/modules/widget-service_main.iml" group="widget-service" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/widget-service_test.iml" filepath="$PROJECT_DIR$/.idea/modules/widget-service_test.iml" group="widget-service" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/microservice-docker-demo-widget.iml" filepath="$PROJECT_DIR$/.idea/modules/microservice-docker-demo-widget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/microservice-docker-demo-widget_main.iml" filepath="$PROJECT_DIR$/.idea/modules/microservice-docker-demo-widget_main.iml" group="microservice-docker-demo-widget" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/microservice-docker-demo-widget_test.iml" filepath="$PROJECT_DIR$/.idea/modules/microservice-docker-demo-widget_test.iml" group="microservice-docker-demo-widget" />
     </modules>
   </component>
 </project>

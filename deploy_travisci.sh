@@ -20,7 +20,7 @@ git config user.email "${COMMIT_AUTHOR_EMAIL}"
 
 git add *.jar
 git commit -m "Deploy Travis CI Build #${TRAVIS_BUILD_NUMBER} artifacts to GitHub"
-git push --force --quiet "https://${GH_TOKEN}@${GH_ARTIFACT_REPO}" master:build-artifacts > /dev/null 2>&1
+git push --force --quiet "https://${GH_TOKEN}@${GH_ARTIFACT_REPO}" fluentd:build-artifacts > /dev/null 2>&1
 
 # Builds immutable Docker Image, deploying the JAR, above.
 cd -
@@ -30,9 +30,9 @@ set -ex
 
 sleep 120 # wait for automated Docker Hub build to finish...
 IMAGE="garystafford/microservice-docker-demo-widget"
-docker build -t ${IMAGE}:latest .
-docker push ${IMAGE}:latest
+docker build -t ${IMAGE}:fluentd .
+docker push ${IMAGE}:fluentd
 
 IMAGE_TAG="0.2.${TRAVIS_BUILD_NUMBER}"
-docker tag ${IMAGE}:latest ${IMAGE}:${IMAGE_TAG}
+docker tag ${IMAGE}:fluentd ${IMAGE}:${IMAGE_TAG}
 docker push ${IMAGE}:${IMAGE_TAG}

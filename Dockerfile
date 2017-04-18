@@ -1,6 +1,6 @@
 FROM openjdk:8u111-jdk-alpine
 LABEL maintainer "Gary A. Stafford <garystafford@rochester.rr.com>"
-ENV REFRESHED_AT 2017-02-26
+ENV REFRESHED_AT 2017-04-17
 VOLUME /tmp
 EXPOSE 8030
 RUN set -ex \
@@ -13,4 +13,4 @@ RUN mkdir /widget \
   && cd /widget \
   && mv widget-service-*.jar widget-service.jar
 ENV JAVA_OPTS=""
-CMD [ "java" "-Djava.security.egd=file:/dev/./urandom", "-jar", "widget/widget-service.jar" ]
+CMD [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "widget/widget-service.jar" ]

@@ -2,7 +2,7 @@ version: '3.0'
 
 services:
   widget:
-    image: garystafford/microservice-docker-demo-widget:latest
+    image: garystafford/microservice-docker-demo-widget:fluentd
     hostname: widget
     depends_on:
     - mongodb
