@@ -1,5 +1,5 @@
 Build:  
-![https://api.travis-ci.org/garystafford/microservice-docker-demo-widget.svg?branch=fluentd](https://travis-ci.org/garystafford/microservice-docker-demo-widget)
+![https://travis-ci.org/garystafford/microservice-docker-demo-widget.svg?branch=fluentd](https://travis-ci.org/garystafford/microservice-docker-demo-widget)
 
 Docker Hub (_status using [MicroBadger](https://microbadger.com/#/)_):  
 [![](https://images.microbadger.com/badges/version/garystafford/microservice-docker-demo-widget.svg)](http://microbadger.com/images/garystafford/microservice-docker-demo-widget "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/garystafford/microservice-docker-demo-widget.svg)](http://microbadger.com/images/garystafford/microservice-docker-demo-widget "Get your own image badge on microbadger.com")
