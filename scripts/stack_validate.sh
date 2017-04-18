@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Checks if ELK is up (last container in stack to start)
+# Checks if Widget Service is up
 
 HOST_IP=$(docker-machine ip worker2)
 ATTEMPTS=16
@@ -21,4 +21,4 @@ do
   let ATTEMPTS-=1
 done
 
-curl "${HOST_IP}:8030/widgets"
+curl "${HOST_IP}:8030/health"
