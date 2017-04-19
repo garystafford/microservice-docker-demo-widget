@@ -16,4 +16,5 @@ sh ./stack_validate.sh
 echo "Seeding MongoDB with sample Widget database..."
 sh ./seed_widgets.sh
 
+echo "Evaluating manager1..."
 eval $(docker-machine env manager1)
