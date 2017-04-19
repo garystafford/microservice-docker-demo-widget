@@ -1,6 +1,6 @@
 Build:  
 [![Build Status](https://travis-ci.org/garystafford/microservice-docker-demo-widget.svg?branch=master)](https://travis-ci.org/garystafford/microservice-docker-demo-widget)
-  
+
 Docker Hub (_status using [MicroBadger](https://microbadger.com/#/)_):  
 [![](https://images.microbadger.com/badges/version/garystafford/microservice-docker-demo-widget.svg)](http://microbadger.com/images/garystafford/microservice-docker-demo-widget "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/garystafford/microservice-docker-demo-widget.svg)](http://microbadger.com/images/garystafford/microservice-docker-demo-widget "Get your own image badge on microbadger.com")
 
@@ -119,10 +119,12 @@ curl -i -X GET http://localhost:8030/widgets | jq .
 #### Stand-Up Project
 
 ```bash
-cd scripts/
+cd microservice-docker-demo-widget/scripts/
+sh ./run_all # Single Uber runner script
 
+# Alternately, run the individual scripts
 sh ./profiles_to_consul.sh # pushes widget spring profiles to consul
 sh ./stack_deploy.sh # deploys widget and mongodb containers
-sh ./validate_stack.sh # waits/tests for all containers to start
+sh ./stack_validate.sh # waits/tests for all containers to start
 sh ./seed_widgets.sh # creates a series of sample widget entries
 ```
