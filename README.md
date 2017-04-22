@@ -120,9 +120,9 @@ curl -i -X GET http://localhost:8030/widgets | jq .
 
 ```bash
 cd microservice-docker-demo-widget/scripts/
-sh ./run_all # Single Uber runner script
+sh ./run_all.sh # single uber-script
 
-# Alternately, run the individual scripts
+# alternately, run the individual scripts
 sh ./profiles_to_consul.sh # pushes widget spring profiles to consul
 sh ./stack_deploy.sh # deploys widget and mongodb containers
 sh ./stack_validate.sh # waits/tests for all containers to start
