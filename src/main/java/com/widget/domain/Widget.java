@@ -1,10 +1,11 @@
-package com.example;
+package com.widget.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Widget {
+
     @Id
     private String id;
 

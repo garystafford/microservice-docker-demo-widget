@@ -1,5 +1,6 @@
-package com.example;
+package com.widget.repository;
 
+import com.widget.domain.Widget;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 

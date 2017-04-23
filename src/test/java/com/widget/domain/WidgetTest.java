@@ -1,5 +1,6 @@
-package com.example;
+package com.widget.domain;
 
+import com.widget.domain.Widget;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

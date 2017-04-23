@@ -1,4 +1,4 @@
-package com.example;
+package com.widget;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
